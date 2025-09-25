@@ -1,0 +1,9 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Smooth anchor scrolling */
+html { scroll-behavior: smooth; }
+
+/* Visible keyboard focus for a11y */
+:focus-visible { outline: 3px solid; outline-offset: 3px; }
