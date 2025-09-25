@@ -7,3 +7,8 @@ html { scroll-behavior: smooth; }
 
 /* Visible keyboard focus for a11y */
 :focus-visible { outline: 3px solid; outline-offset: 3px; }
+/* active nav state */
+.menu a.active,
+.menu li > a.active { text-decoration: underline; font-weight: 600; }
+/* subtle link hover */
+a:hover { opacity: .9; }
