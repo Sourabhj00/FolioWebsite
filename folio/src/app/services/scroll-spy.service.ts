@@ -1,11 +1,23 @@
 ﻿import { Injectable, signal } from "@angular/core";
 
+const KEY = "lastSection";
+
 @Injectable({ providedIn: "root" })
 export class ScrollSpyService {
-  // holds the id ("about" | "skills" | ...) of the section that's most in view
   currentSection = signal<string>("about");
 
   setCurrent(id: string) {
     this.currentSection.set(id);
+    try {
+      localStorage.setItem(KEY, id);
+    } catch {}
+  }
+
+  getLast(): string | null {
+    try {
+      return localStorage.getItem(KEY);
+    } catch {
+      return null;
+    }
   }
 }

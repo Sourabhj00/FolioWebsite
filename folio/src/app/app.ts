@@ -1,5 +1,5 @@
 ﻿import { CommonModule } from "@angular/common";
-import { Component, inject } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { trigger, transition, style, animate } from "@angular/animations";
 import { ObserveSectionDirective } from "./directives/observe-section.directive";
 import { ScrollSpyService } from "./services/scroll-spy.service";
@@ -20,7 +20,7 @@ import { PROFILE } from "./content/profile";
     ])
   ]
 })
-export class App {
+export class App implements OnInit {
   protected readonly currentYear = new Date().getFullYear();
   public readonly profile = PROFILE;
   public readonly spy = inject(ScrollSpyService);
@@ -28,7 +28,17 @@ export class App {
     typeof window !== "undefined"
       ? !window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches
       : true;
+
+  ngOnInit(): void {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const last = this.spy.getLast() || (window.location.hash ? window.location.hash.replace("#", "") : null);
+
+    if (last) {
+      this.spy.setCurrent(last);
+      setTimeout(() => document.getElementById(last)?.scrollIntoView({ behavior: "instant", block: "start" }), 0);
+    }
+  }
 }
-
-
-

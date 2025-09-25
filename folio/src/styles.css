@@ -7,8 +7,44 @@ html { scroll-behavior: smooth; }
 
 /* Visible keyboard focus for a11y */
 :focus-visible { outline: 3px solid; outline-offset: 3px; }
-/* active nav state */
-.menu a.active,
-.menu li > a.active { text-decoration: underline; font-weight: 600; }
-/* subtle link hover */
+
+/* Subtle link hover */
 a:hover { opacity: .9; }
+
+@layer components {
+  .btn-gradient {
+    @apply relative inline-flex items-center justify-center px-6 py-3 rounded-2xl font-semibold text-white;
+    background-image: linear-gradient(135deg, theme(colors.brand.grad1), theme(colors.brand.grad2));
+    box-shadow: 0 10px 30px -10px rgba(139,92,246,.4);
+  }
+
+  .btn-gradient:hover { filter: brightness(1.05); }
+
+  .section {
+    @apply min-h-screen flex items-center justify-center snap-start px-6 sm:px-8;
+  }
+
+  .navlink {
+    @apply relative text-white/70 transition-colors duration-200;
+  }
+
+  .navlink:hover,
+  .navlink.active {
+    color: theme('colors.brand.grad1');
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
+}
+
+@layer utilities {
+  .bg-radial {
+    background:
+      radial-gradient(60rem 60rem at 120% -10%, rgba(34,211,238,.08), transparent 60%),
+      radial-gradient(50rem 50rem at -20% 10%, rgba(139,92,246,.12), transparent 60%),
+      radial-gradient(40rem 40rem at 50% 120%, rgba(167,139,250,.08), transparent 60%),
+      theme(colors.brand.bg);
+  }
+}
+
+/* keep headings visible under sticky header */
+.section { scroll-margin-top: 6rem; }

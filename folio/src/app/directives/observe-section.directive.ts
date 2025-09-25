@@ -7,30 +7,30 @@ import { ScrollSpyService } from "../services/scroll-spy.service";
 })
 export class ObserveSectionDirective implements OnInit, OnDestroy {
   @Input("observeSection") sectionId!: string;
-  private observer?: IntersectionObserver;
+  private io?: IntersectionObserver;
 
   constructor(private el: ElementRef, private spy: ScrollSpyService) {}
 
   ngOnInit(): void {
-    this.observer = new IntersectionObserver(
+    this.io = new IntersectionObserver(
       (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
             this.spy.setCurrent(this.sectionId);
           }
         }
       },
       {
-        // start switching a bit before the section top hits the navbar
         root: null,
-        rootMargin: "-30% 0px -60% 0px", // top bias
-        threshold: [0, 0.25, 0.5, 0.75, 1]
-      }
+        rootMargin: "-35% 0px -60% 0px",
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+      },
     );
-    this.observer.observe(this.el.nativeElement);
+
+    this.io.observe(this.el.nativeElement);
   }
 
   ngOnDestroy(): void {
-    this.observer?.disconnect();
+    this.io?.disconnect();
   }
 }
